@@ -1,0 +1,26 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <dirent.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+
+int main() {
+    DIR *dir;
+    struct dirent *entry;
+
+    dir = opendir(".");
+    if (dir == NULL) {
+        perror("Error opening directory");
+        return 1;
+    }
+
+    while ((entry = readdir(dir)) != NULL) {
+        if (entry->d_name[0] != '.') {
+            printf("%s\n", entry->d_name);
+        }
+    }
+
+    closedir(dir);
+    return 0;
+}
